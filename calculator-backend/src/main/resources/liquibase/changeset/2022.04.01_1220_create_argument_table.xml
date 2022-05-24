@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet id="2022.04.01_1220_create_argument_sequence" author="aliaksandr anashkevich">
+        <createSequence sequenceName="argument_id_seq" startValue="1" incrementBy="1"/>
+    </changeSet>
+
+    <changeSet id="2022.04.01_1221_create_argument_table" author="aliaksandr anashkevich">
+        <createTable tableName="arguments">
+            <column name="id" type="bigint" defaultValueComputed="nextval('argument_id_seq')">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="count" type="double">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="material_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2022.04.01_1225_material_arguments_relations" author="aliaksandr anashkevich">
+        <addForeignKeyConstraint baseTableName="arguments"
+                                 baseColumnNames="material_id"
+                                 constraintName="material_arguments_fk"
+                                 referencedTableName="materials"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>

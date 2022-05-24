@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet id="2022.04.01_1230_insert_material_data" author="aliaksandr anashkevich">
+        <sql>
+            INSERT INTO materials (name, description, range)
+            values
+            ('Pt, alpha = 0.00385', 'Платиновые термометры сопротивления', 'От -200° до 850°'),
+            ('Pt, alpha = 0.00391', 'Платиновые термометры сопротивления', 'От -200° до 850°'),
+            ('Cu', 'Медные термометры сопротивления', 'От -180° до 200°'),
+            ('Ni', 'Никелевые термометры сопротивления', 'От -60° до 180°');
+        </sql>
+    </changeSet>
+
+    <changeSet id="2022.04.01_1235_insert_expresion_data" author="aliaksandr anashkevich">
+        <sql>
+            BEGIN TRANSACTION;
+
+            WITH material AS(
+            SELECT id FROM materials WHERE name='Pt, alpha = 0.00385')
+            INSERT INTO expressions(name, min_temperature, max_temperature, material_id)
+            VALUES
+            ('r*(1+a*t+b*t^2+c*(t-100)*t^3)', -200.0, 0.0,(SELECT id FROM material)),
+            ('r*(1+a*t+b*t^2)', 0.0, 850.0,(SELECT id FROM material));
+
+            WITH material AS(
+            SELECT id FROM materials WHERE name='Pt, alpha = 0.00391')
+            INSERT INTO expressions(name, min_temperature, max_temperature, material_id)
+            VALUES
+            ('r*(1+a*t+b*t^2+c*(t-100)*t^3)', -200.0, 0.0,(SELECT id FROM material)),
+            ('r*(1+a*t+b*t^2)', 0.0, 850.0,(SELECT id FROM material));
+
+            WITH material AS(
+            SELECT id FROM materials WHERE name='Cu')
+            INSERT INTO expressions(name, min_temperature, max_temperature, material_id)
+            VALUES
+            ('r*(1+a*t+b*t*(t+6.7)+c*(t-100)*t^3)', -180.0, 0.0,(SELECT id FROM material)),
+            ('r*(1+a*t)', 0.0, 200.0,(SELECT id FROM material));
+
+            WITH material AS(
+            SELECT id FROM materials WHERE name='Ni')
+            INSERT INTO expressions(name, min_temperature, max_temperature, material_id)
+            VALUES
+            ('r*(1+a*t+b*t^2)', -60.0, 100.0,(SELECT id FROM material)),
+            ('r*(1+a*t+b*t^2+c*(t-100)*t^2)', 100.0, 180.0,(SELECT id FROM material));
+
+            COMMIT;
+        </sql>
+    </changeSet>
+
+
+    <changeSet id="2022.04.01_1240_insert_argument_data" author="aliaksandr anashkevich">
+        <sql>
+            BEGIN TRANSACTION;
+
+            WITH material AS(
+            SELECT id FROM materials WHERE name='Pt, alpha = 0.00385')
+            INSERT INTO arguments(name, count, material_id)
+            VALUES
+            ('a', 3.9083e-3,(SELECT id FROM material)),
+            ('b', -5.775e-7, (SELECT id FROM material)),
+            ('c', -4.183e-12, (SELECT id FROM material));
+
+            WITH material AS(
+            SELECT id FROM materials WHERE name='Pt, alpha = 0.00391')
+            INSERT INTO arguments(name, count, material_id)
+            VALUES
+            ('a', 3.969e-3,(SELECT id FROM material)),
+            ('b', -5.841e-7, (SELECT id FROM material)),
+            ('c', -4.33e-12, (SELECT id FROM material));
+
+            WITH material AS(
+            SELECT id FROM materials WHERE name='Cu')
+            INSERT INTO arguments(name, count, material_id)
+            VALUES
+            ('a', 4.28e-3,(SELECT id FROM material)),
+            ('b', -6.2032e-7, (SELECT id FROM material)),
+            ('c', -8.5154e-12, (SELECT id FROM material));
+
+            WITH material AS(
+            SELECT id FROM materials WHERE name='Ni')
+            INSERT INTO arguments(name, count, material_id)
+            VALUES
+            ('a', 5.4963e-3,(SELECT id FROM material)),
+            ('b', -6.7556e-7, (SELECT id FROM material)),
+            ('c', -9.2004e-10, (SELECT id FROM material));
+
+            COMMIT;
+        </sql>
+    </changeSet>
+</databaseChangeLog>

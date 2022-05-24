@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet id="2022.04.01_1210_create_expression_sequence" author="aliaksandr anashkevich">
+        <createSequence sequenceName="expression_id_seq" startValue="1" incrementBy="1"/>
+    </changeSet>
+
+    <changeSet id="2022.04.01_1211_create_expression_table" author="aliaksandr anashkevich">
+        <createTable tableName="expressions">
+            <column name="id" type="bigint" defaultValueComputed="nextval('expression_id_seq')">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="min_temperature" type="double">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="max_temperature" type="double">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="material_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2022.04.01_1215_material_expressions_relations" author="aliaksandr anashkevich">
+        <addForeignKeyConstraint baseTableName="expressions"
+                                 baseColumnNames="material_id"
+                                 constraintName="material_expressions_fk"
+                                 referencedTableName="materials"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,69 @@
+plugins {
+    id 'org.springframework.boot' version '2.6.7'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+group = 'by.bsu'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    lombokMapstructBindingVersion = '0.2.0'
+    lombokVersion = '1.18.20'
+    mapstructVersion = '1.4.2.Final'
+    jjwtVersion = '0.2'
+    swaggerVersion = '2.1.12'
+    springdocVersion = '1.6.4'
+    junitVersion = '5.8.1'
+    jacksonVersion = '2.13.1'
+    jsonWebTokenVersion = '0.9.1'
+    javaluatorVersion = '3.0.0'
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.liquibase:liquibase-core'
+    implementation "io.jsonwebtoken:jjwt:${jjwtVersion}"
+    implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+    implementation "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+    implementation "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
+    implementation "io.swagger.core.v3:swagger-core:${swaggerVersion}"
+    implementation "io.swagger.core.v3:swagger-annotations:${swaggerVersion}"
+    implementation "org.springdoc:springdoc-openapi-ui:${springdocVersion}"
+    implementation "com.fathzer:javaluator:${javaluatorVersion}"
+
+    compileOnly "org.mapstruct:mapstruct:${mapstructVersion}"
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    compileOnly "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructBindingVersion}"
+
+    runtimeOnly 'org.postgresql:postgresql'
+
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructBindingVersion}"
+
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

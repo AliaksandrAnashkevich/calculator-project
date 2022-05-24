@@ -1,0 +1,82 @@
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-14">
+      <div class="card my-4">
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+          <div class="bg-gradient-info shadow-primary border-radius-lg pt-4 pb-3">
+            <h6 class="text-white text-capitalize ps-3">Калькулятор</h6>
+          </div>
+
+          <div class="table-responsive p-0">
+            <div>
+              <form [formGroup]="form">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                  <tr>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" scope="col">
+                      материал
+                    </th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                        scope="col">Диапазон
+                    </th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                        scope="col">Температура
+                    </th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                        scope="col">Сопротивление при 0&#176;
+                    </th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                        scope="col">Посчитать
+                    </th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" scope="col">Ответ
+                    </th>
+                  </tr>
+                  </thead>
+                  <tbody formArrayName="rows">
+                  <tr *ngFor="let item of rows.controls; let i = index;" [formGroupName]="i">
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        {{item.value.name}}
+                      </div>
+                    </td>
+
+                    <td>
+                      <div class="d-flex flex-column justify-content-center">
+                        {{item.value.range}}
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex px-2 py-1"><input class="form-control" name="temperature"
+                                                           formControlName="temperature">
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex flex-column justify-content-center">
+                        <input class="form-control" name="resistance" formControlName="resistance">
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <button (click)="count(i)" class="btn bg-gradient-info btn-block">Посчитать</button>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        {{item.value.answer}}
+                      </div>
+                    </td>
+                  </tr>
+                  <tr scope="row" *ngIf="materials.length === 0">
+                    <td colspan="6" class="text-center">No record found</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
