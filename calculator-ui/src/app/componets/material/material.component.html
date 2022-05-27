@@ -1,1 +1,33 @@
-<p>material works!</p>
+<div>
+  <form [formGroup]="form">
+    <table>
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Info</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+      </thead>
+      <tbody formArrayName="rows">
+      <tr *ngFor="let item of rows.controls; let i = index;" [formGroupName]="i">
+        <td>{{item.value.id}}</td>
+        <td>{{item.value.name}}</td>
+        <td>
+          <a class="btn btn-info m-1" [routerLink]="['/info/',item.value.id]">Info</a>
+        </td>
+        <td>
+          <a class="btn btn-info m-1" [routerLink]="['/update/',item.value.id]">Update</a>
+        </td>
+        <td>
+          <a class="btn btn-info m-1" [routerLink]="['/delete/',item.value.id]">Delete</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </form>
+  <div>
+    <a class="btn btn-info m-1" [routerLink]="['/add/']">Add</a>
+  </div>
+</div>

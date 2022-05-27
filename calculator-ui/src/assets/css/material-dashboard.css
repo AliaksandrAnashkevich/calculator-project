@@ -35,16 +35,14 @@
   --bs-danger: #F44335;
   --bs-light: #f0f2f5;
   --bs-dark: #344767;
-  --bs-white: #fff;
   --bs-primary-rgb: 233, 30, 99;
-  --bs-secondary-rgb: , 128, 154;
+  --bs-secondary-rgb: 100, 128, 154;
   --bs-success-rgb: 76, 175, 80;
   --bs-info-rgb: 26, 115, 232;
   --bs-warning-rgb: 251, 140, 0;
   --bs-danger-rgb: 244, 67, 53;
   --bs-light-rgb: 240, 242, 245;
   --bs-dark-rgb: 52, 71, 103;
-  --bs-white-rgb: 255, 255, 255;
   --bs-white-rgb: 255, 255, 255;
   --bs-black-rgb: 0, 0, 0;
   --bs-body-color-rgb: , 128, 154;
@@ -27285,5 +27283,3 @@ pre[class*="language-"] {
     overflow: auto !important;
   }
 }
-
-/*# sourceMappingURL=dashboard-free.css.map */

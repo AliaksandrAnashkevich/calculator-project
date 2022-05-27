@@ -26,7 +26,6 @@ export class CalculateComponent implements OnInit {
 
     this.calculateService.getAll().subscribe((data) => {
         this.materials = data;
-        console.log(data)
 
       this.materials.forEach( (material) => {
         const calculateForm = this.fb.group({
